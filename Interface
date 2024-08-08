@@ -1,0 +1,14 @@
+using WebAPI_Project.Models;
+
+namespace WebAPI_Project.Interface
+{
+    public interface IDepartment
+    {
+        public List<Department> GetDepartmentDetails();
+        public Department GetDepartmentById(int id);
+        public void AddDepartment(Department department);
+        public void UpdateDepartment(Department department);
+        public Department DeleteDepartment(int id);
+        
+    }
+}
