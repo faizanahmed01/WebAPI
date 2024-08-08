@@ -1,0 +1,101 @@
+using Microsoft.EntityFrameworkCore;
+using WebAPI_Project.Interface;
+using WebAPI_Project.Models;
+
+namespace WebAPI_Project.Repository
+{
+    public class DepartmentRepository : IDepartment
+    {
+
+       private readonly ApplicationDBContext _dbContext;
+
+        public DepartmentRepository(ApplicationDBContext dbContext)
+        {
+            _dbContext = dbContext;
+        }
+        public void AddDepartment(Department department)
+        {
+            try
+            {
+                _dbContext.Departments.Add(department);
+                _dbContext.SaveChanges();
+            }
+            catch
+            {
+                throw;
+            }
+        }
+
+        public List<Department> GetDepartmentDetails()
+        {
+            try
+            {
+                return _dbContext.Departments.ToList();
+            }
+            catch
+            {
+                throw;
+            }
+        }
+
+        public Department GetDepartmentById(int id)
+        {
+            try
+            {
+                Department? department = _dbContext.Departments.Find(id);
+                if (department != null)
+                {
+                    return department;
+                }
+                else
+                {
+                    throw new ArgumentNullException();
+                }
+            }
+            catch
+            {
+                throw;
+            }
+        }
+
+        public void UpdateDepartment(Department department)
+        {
+            try
+            {
+                _dbContext.Entry(department).State = EntityState.Modified;
+                _dbContext.SaveChanges();
+            }
+            catch
+            {
+                throw;
+            }
+        }
+        public Department DeleteDepartment(int id)
+        {
+            try
+            {
+                Department? department = _dbContext.Departments.Find(id);
+
+                if (department != null)
+                {
+                    _dbContext.Departments.Remove(department);
+                    _dbContext.SaveChanges();
+                    return department;
+                }
+                else
+                {
+                    throw new ArgumentNullException();
+                }
+            }
+            catch
+            {
+                throw;
+            }
+        }
+
+      
+
+       
+     
+    }
+}
